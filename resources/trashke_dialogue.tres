@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="npc_dialogue" load_steps=2 format=3 uid="uid://bgn3q65d67vuq"]
+
+[ext_resource type="Script" path="res://scripts/resoureceScripts/npc_dialogue.gd" id="1_y3fig"]
+
+[resource]
+script = ExtResource("1_y3fig")
+dialogue = ["Nice eyes-er, eye!", "Nerd", "You are smelly"]
