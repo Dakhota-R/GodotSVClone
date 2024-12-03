@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://cguapap4djrqf"]
+
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_oo8x0"]
+
+[node name="PauseMenu" type="Control"]
+process_mode = 2
+z_index = 5
+z_as_relative = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_oo8x0")
+
+[node name="Unpause" type="Button" parent="."]
+layout_mode = 0
+offset_left = -126.0
+offset_top = -146.0
+offset_right = 130.0
+offset_bottom = -50.0
+text = "Unpause"
+
+[node name="Save" type="Button" parent="."]
+layout_mode = 0
+offset_left = -75.0
+offset_top = 47.0
+offset_right = 72.0
+offset_bottom = 158.0
+text = "Save"
+
+[connection signal="pressed" from="Unpause" to="." method="_on_unpause_pressed"]

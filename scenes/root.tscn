@@ -174,7 +174,6 @@ texture = ExtResource("2_8l6l2")
 stretch_mode = 1
 
 [node name="SpawnTiles" type="TileMapLayer" parent="."]
-visible = false
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAD+/wIAAAACAAAAAAAAAP7/AAABAAAAAAAJAPX/AAADAAAAAAAJAOn/AAADAAAAAAD4/+n/AAADAAAAAAD4//X/AAADAAAAAAA=")
 tile_set = SubResource("TileSet_rwevf")

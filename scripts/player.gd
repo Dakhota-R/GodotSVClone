@@ -4,7 +4,7 @@ const tile_size = 16
 var moving = false
 var input_dir
 
-var player_pos = Vector2i(0, 1)
+var player_pos = Vector2i(0, 0)
 
 var tilemaps_dict = {
 	"floor_tiles": [],
@@ -58,21 +58,12 @@ func _physics_process(delta: float) -> void:
 	input_dir = Vector2.ZERO
 
 #-DOWN-------------------------------------------------------------
-	if Input.is_action_pressed("ui_down"):
+	if Input.is_action_pressed("ui_down") and not Input.is_action_pressed("ui_right"):
 		input_dir = Vector2(-1, .5)
 		next_pos = Vector2i(player_pos.x, player_pos.y + 1)
 		anim_side = "Front"
 		anim_flip = false
 		direction = "down"
-
-		move(next_pos, speed)
-#-UP---------------------------------------------------------------
-	elif Input.is_action_pressed("ui_up"):
-		input_dir = Vector2(1, -.5)
-		next_pos = Vector2i(player_pos.x, player_pos.y - 1)
-		anim_side = "Back"
-		anim_flip = true
-		direction = "up"
 
 		move(next_pos, speed)
 #-LEFT---------------------------------------------------------------
@@ -84,6 +75,15 @@ func _physics_process(delta: float) -> void:
 		direction = "left"
 
 		move(next_pos, speed)
+#-UP---------------------------------------------------------------
+	elif Input.is_action_pressed("ui_up"):
+		input_dir = Vector2(1, -.5)
+		next_pos = Vector2i(player_pos.x, player_pos.y - 1)
+		anim_side = "Back"
+		anim_flip = true
+		direction = "up"
+
+		move(next_pos, speed)
 #-RIGHT------------------------------------------------------------
 	elif Input.is_action_pressed("ui_right"):
 		input_dir = Vector2(1,.5)
@@ -93,7 +93,7 @@ func _physics_process(delta: float) -> void:
 		direction = "right"
 
 		move(next_pos, speed) 
-#------------------------------------------------------------------	
+#------------------------------------------------------------------
 
 #-Test Interact
 	if Input.is_action_just_pressed("Interact"):
@@ -168,7 +168,6 @@ func get_facing_tile(facing_direction, next_pos):
 			return Vector2i(next_pos.x, next_pos.y + 1)
 
 func play_npc_dialog():
-	
 
 	var npc = rootNode.get_node("Objects/Trashke")
 	var dialog_list = npc.dialogue_list
@@ -213,3 +212,11 @@ func disable_dialog():
 
 func update_camera():
 	self.get_node("Smoothing2D").get_node("Camera2D").global_position = self.global_position
+
+
+
+func _on_unpause_pressed() -> void:
+	get_tree().paused = false
+
+func _on_save_pressed() -> void:
+	pass # Replace with function body.
