@@ -49,6 +49,8 @@ func load_game():
 	if not FileAccess.file_exists("user://savegame.save"):
 		return # no save exists
 
+	var player_node = rootNode.get_node("Objects/Player")
+
 	# copied tut comments: 
 	# We need to revert the game state so we're not cloning objects
 	# during loading. This will vary wildly depending on the needs of a
@@ -75,18 +77,17 @@ func load_game():
 		var node_data = json.data
 		print(node_data)
 
-		# create object and add to tree
-		#var new_object = load(node_data["filename"]).instantiate()
-		#get_node(node_data["parent"]).add_child(new_object)
-		#print(str_to_var("Vector2i" + node_data["player_pos"]))
-		rootNode.get_node("Objects/Player").player_pos = str_to_var("Vector2i" + node_data["player_pos"])
+		# set player pos
+		player_node.player_pos = str_to_var("Vector2i" + node_data["player_pos"])
 		var new_player_location = rootNode.get_node("Ground").map_to_local(str_to_var("Vector2i" + node_data["player_pos"]))
 		new_player_location.y = new_player_location.y - 64
-		rootNode.get_node("Objects/Player").position = new_player_location
+		player_node.position = new_player_location
+		player_node.direction = node_data["direction"]
+		player_node.anim_side = node_data["anim_side"]
+		player_node.anim_flip = node_data["anim_flip"]
+
+		#unpause the game and close pause menu if open
 		get_tree().paused = false
-		#for i in node_data.keys():
-			#if i == "player_pos":
-				#continue
 		unpause()
 
 func unpause():

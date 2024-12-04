@@ -199,7 +199,7 @@ func play_npc_dialog():
 
 
 func test_change_tile(facing_tile):
-	rootNode.get_node("Ground").set_cell(facing_tile, 0, Vector2i(4, 1))
+	rootNode.get_node("Ground").set_cell(facing_tile, 1, Vector2i(4, 1))
 	tilemaps_dict.floor_tiles.append(facing_tile)
 
 func disable_dialog():
@@ -223,6 +223,9 @@ func save():
 		"filename" : self.get_scene_file_path(),
 		"parent" : rootNode.get_node("Objects").get_path(),
 		"player_pos" : player_pos,
+		"direction" : direction,
+		"anim_side" : anim_side,
+		"anim_flip" : anim_flip
 	}
 
 	return save_dict
