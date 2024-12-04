@@ -10,9 +10,7 @@ func _ready() -> void:
 
 
 func _on_unpause_pressed() -> void:
-	var pause_menu_node = rootNode.get_node("Objects/Player/PauseMenu")
-	pause_menu_node.set_visible(false)
-	get_tree().paused = false
+	unpause()
 
 
 func _on_save_pressed() -> void:
@@ -45,6 +43,9 @@ func _on_save_pressed() -> void:
 
 
 func _on_temp_load_game_pressed() -> void:
+	load_game()
+
+func load_game():
 	if not FileAccess.file_exists("user://savegame.save"):
 		return # no save exists
 
@@ -79,8 +80,16 @@ func _on_temp_load_game_pressed() -> void:
 		#get_node(node_data["parent"]).add_child(new_object)
 		#print(str_to_var("Vector2i" + node_data["player_pos"]))
 		rootNode.get_node("Objects/Player").player_pos = str_to_var("Vector2i" + node_data["player_pos"])
-
+		var new_player_location = rootNode.get_node("Ground").map_to_local(str_to_var("Vector2i" + node_data["player_pos"]))
+		new_player_location.y = new_player_location.y - 64
+		rootNode.get_node("Objects/Player").position = new_player_location
 		get_tree().paused = false
 		#for i in node_data.keys():
 			#if i == "player_pos":
 				#continue
+		unpause()
+
+func unpause():
+	var pause_menu_node = rootNode.get_node("Objects/Player/PauseMenu")
+	pause_menu_node.set_visible(false)
+	get_tree().paused = false

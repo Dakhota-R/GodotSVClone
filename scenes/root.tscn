@@ -252,10 +252,10 @@ framerate = 120
 [node name="AnimatedBackground" parent="." instance=ExtResource("1_jcy88")]
 
 [node name="TextureRect" type="TextureRect" parent="AnimatedBackground"]
-offset_left = -1577.0
-offset_top = -2018.0
-offset_right = 3627.0
-offset_bottom = 966.0
+offset_left = -2601.0
+offset_top = -1538.0
+offset_right = 2603.0
+offset_bottom = 1446.0
 texture = ExtResource("3_pclgv")
 stretch_mode = 1
 

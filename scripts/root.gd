@@ -7,6 +7,9 @@ func _ready() -> void:
 		Engine.max_fps = framerate
 		Engine.physics_ticks_per_second = framerate * 2
 
+		var pause_menu_node = get_node("Objects/Player/PauseMenu")
+		pause_menu_node.load_game()
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
