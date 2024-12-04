@@ -9,8 +9,10 @@ var player_pos = Vector2i(0, 0)
 var tilemaps_dict = {
 	"floor_tiles": [],
 	"obstacle_tiles": [],
-	"npc_tile": []
+	"npc_tile": [],
 }
+
+var placed_tiles = []
 
 @onready var _animation_player = $AnimationPlayer
 
@@ -98,7 +100,7 @@ func _physics_process(delta: float) -> void:
 		if get_facing_tile(direction, player_pos) == Vector2i(tilemaps_dict.npc_tile[0]):
 			play_npc_dialog()
 		else:
-			test_change_tile(get_facing_tile(direction, player_pos))
+			place_tiles(get_facing_tile(direction, player_pos))
 
 	play_animation("Eye_", anim_side, anim_flip)
 	update_camera()
@@ -198,9 +200,13 @@ func play_npc_dialog():
 	dialog_text.text = '"' + dialog_list[dialog_index] + '"'
 
 
-func test_change_tile(facing_tile):
+func place_tiles(facing_tile):
 	rootNode.get_node("Ground").set_cell(facing_tile, 1, Vector2i(4, 1))
 	tilemaps_dict.floor_tiles.append(facing_tile)
+	add_placed_tile(facing_tile, 1, Vector2i(4, 1))
+
+func add_placed_tile(tile_pos, atlas_source, atlas_coord):
+	placed_tiles.append([tile_pos, atlas_source, atlas_coord])
 
 func disable_dialog():
 	dialog_box.visible = false
@@ -212,10 +218,13 @@ func disable_dialog():
 func update_camera():
 	self.get_node("Smoothing2D").get_node("Camera2D").global_position = self.global_position
 
-
-
 func _on_unpause_pressed() -> void:
 	get_tree().paused = false
+
+func load_placed_tiles():
+	for tile in placed_tiles:
+		rootNode.get_node("Ground").set_cell(tile[0], tile[1], tile[2])
+		tilemaps_dict.floor_tiles.append(tile[0])
 
 
 func save():
@@ -225,7 +234,8 @@ func save():
 		"player_pos" : player_pos,
 		"direction" : direction,
 		"anim_side" : anim_side,
-		"anim_flip" : anim_flip
+		"anim_flip" : anim_flip,
+		"placed_tiles" : placed_tiles
 	}
 
 	return save_dict

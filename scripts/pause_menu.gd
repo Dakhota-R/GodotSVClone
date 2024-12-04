@@ -86,6 +86,21 @@ func load_game():
 		player_node.anim_side = node_data["anim_side"]
 		player_node.anim_flip = node_data["anim_flip"]
 
+		# set placed tiles
+		if node_data.has("placed_tiles"):
+			var parsed_tiles = []
+			for tile in node_data["placed_tiles"]:
+				var tile_data = []
+				tile_data.append(str_to_var("Vector2i" + tile[0]))
+				tile_data.append(tile[1])
+				tile_data.append(str_to_var("Vector2i" + tile[2]))
+				parsed_tiles.append(tile_data)
+			
+			player_node.placed_tiles = parsed_tiles
+			player_node.load_placed_tiles()
+		else:
+			continue
+
 		#unpause the game and close pause menu if open
 		get_tree().paused = false
 		unpause()
