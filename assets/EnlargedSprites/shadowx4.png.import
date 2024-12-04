@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bws4cl7ffvt4f"
-path="res://.godot/imported/greenpawnguy.png-fb8e5018d6b42b91abd22f48b9e87bda.ctex"
+uid="uid://hepsq8co8m7c"
+path="res://.godot/imported/shadowx4.png-a2b44b454e08f5d9211880389b8b3a86.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/greenpawnguy.png"
-dest_files=["res://.godot/imported/greenpawnguy.png-fb8e5018d6b42b91abd22f48b9e87bda.ctex"]
+source_file="res://assets/EnlargedSprites/shadowx4.png"
+dest_files=["res://.godot/imported/shadowx4.png-a2b44b454e08f5d9211880389b8b3a86.ctex"]
 
 [params]
 

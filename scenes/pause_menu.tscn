@@ -28,4 +28,14 @@ offset_right = 72.0
 offset_bottom = 158.0
 text = "Save"
 
+[node name="TempLoadGame" type="Button" parent="."]
+layout_mode = 0
+offset_left = 106.0
+offset_top = -23.0
+offset_right = 358.0
+offset_bottom = 80.0
+text = "load gameS"
+
 [connection signal="pressed" from="Unpause" to="." method="_on_unpause_pressed"]
+[connection signal="pressed" from="Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="TempLoadGame" to="." method="_on_temp_load_game_pressed"]

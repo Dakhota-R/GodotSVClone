@@ -22,14 +22,18 @@ SignalBus="*res://Singletons/SignalBus.gd"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/stretch/mode="viewport"
-window/stretch/scale_mode="integer"
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 window/vsync/vsync_mode=0
 window/main_scene="res://scenes/root.tscn"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/smoothing/plugin.cfg")
+enabled=PackedStringArray()
+
+[global_group]
+
+Persist=""
 
 [input]
 

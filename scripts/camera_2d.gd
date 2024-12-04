@@ -11,6 +11,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	delta = delta 
 
+func _physics_process(delta: float) -> void:
+	delta = delta
+	self.global_position = rootNode.get_node("Objects/Player").global_position.round()
+
 
 	
 

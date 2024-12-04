@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b18si8suw0f8f"
-path="res://.godot/imported/BlueBackgroundTile.png-df48252ae1a212f2c5d13e3b6715a70b.ctex"
+uid="uid://klejmuh5c0n1"
+path="res://.godot/imported/iso_tileset_IT_onex4.png-7df26f8902f8f68bc2e25cabd4664175.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/BlueBackgroundTile.png"
-dest_files=["res://.godot/imported/BlueBackgroundTile.png-df48252ae1a212f2c5d13e3b6715a70b.ctex"]
+source_file="res://assets/EnlargedSprites/iso_tileset_IT_onex4.png"
+dest_files=["res://.godot/imported/iso_tileset_IT_onex4.png-7df26f8902f8f68bc2e25cabd4664175.ctex"]
 
 [params]
 

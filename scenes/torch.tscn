@@ -1,15 +1,15 @@
 [gd_scene load_steps=3 format=3 uid="uid://bc4eqat4x1khu"]
 
-[ext_resource type="Texture2D" uid="uid://db73e2j4f51ro" path="res://assets/torch.png" id="1_fq7a1"]
+[ext_resource type="Texture2D" uid="uid://b06jh68fixhjo" path="res://assets/torchx4.png" id="1_puaee"]
 [ext_resource type="Texture2D" uid="uid://cd4n84rncfn0e" path="res://assets/pointlighttexture.webp" id="2_pcbk5"]
 
 [node name="Torch" type="Sprite2D"]
 z_as_relative = false
-texture = ExtResource("1_fq7a1")
+texture = ExtResource("1_puaee")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 y_sort_enabled = true
-position = Vector2(0, 3.5)
+position = Vector2(2, 0)
 scale = Vector2(1, 0.636161)
 color = Color(0.563626, 0.252311, 0.0269288, 1)
 energy = 2.11

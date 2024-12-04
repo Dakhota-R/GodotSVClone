@@ -1,6 +1,6 @@
 extends CharacterBody2D 
 
-const tile_size = 16
+const tile_size = 16 * 4
 var moving = false
 var input_dir
 
@@ -28,8 +28,7 @@ var more_dialog = true
 @onready var rootNode = get_tree().get_root().get_node("Root")
 
 func _ready() -> void:
-	Engine.max_fps = 120
-	Engine.physics_ticks_per_second = 320
+	print(get_node(rootNode.get_node("Objects").get_path()))
 
 	# this will eventually let me tell which npc im talking to (use custom data dummy)
 	var spawnTilesLayer = rootNode.get_node("SpawnTiles")
@@ -51,7 +50,6 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-
 	delta = delta
 	var speed = .15
 	var next_pos
@@ -120,6 +118,7 @@ func move(next_pos, speed):
 		if moving == false:
 			moving = true
 			var tween = create_tween()
+			tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 			tween.tween_property(self, "position", position + input_dir*tile_size, speed)
 			tween.tween_callback(update_player_pos.bind(next_pos))
 			tween.tween_callback(move_false)
@@ -218,5 +217,12 @@ func update_camera():
 func _on_unpause_pressed() -> void:
 	get_tree().paused = false
 
-func _on_save_pressed() -> void:
-	pass # Replace with function body.
+
+func save():
+	var save_dict = {
+		"filename" : self.get_scene_file_path(),
+		"parent" : rootNode.get_node("Objects").get_path(),
+		"player_pos" : player_pos,
+	}
+
+	return save_dict

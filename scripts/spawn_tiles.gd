@@ -5,14 +5,14 @@ var npc_tiles = []
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
-
+	
 	# get spawn tile at 0 index
-	var spawn_tile = map_to_local(self.get_used_cells()[0])
+	#var spawn_tile = map_to_local(self.get_used_cells()[0])
 	# need to get global position of tile
-	var test = local_to_map(spawn_tile)
+	#var test = local_to_map(spawn_tile)
 	##### GOT THE CUSTOM DATA
-	var custom_data = self.get_cell_tile_data(test).get_custom_data("Spawn")
-	print(custom_data)
+	#var custom_data = self.get_cell_tile_data(test).get_custom_data("Spawn")
+	#print(custom_data)
 
 
 
@@ -31,7 +31,7 @@ func _process(delta: float) -> void:
 
 func parse_spawns(spawns):
 	var rootNode = get_tree().get_root().get_node("Root")
-	var player_node = rootNode.get_node("Objects/Player")
+	#var player_node = rootNode.get_node("Objects/Player")
 	
 
 	# load scene
@@ -53,18 +53,22 @@ func parse_spawns(spawns):
 		var cell_custom_data = self.get_cell_tile_data(cell_global_pos).get_custom_data("Spawn")
 		
 		if cell_custom_data == "Player":
-			cell.y = cell.y - 16
+			var player_scene_resource = preload("res://scenes/Player.tscn")
+			var player_node = player_scene_resource.instantiate()
+			player_node.name = "Player"
+			rootNode.get_node("Objects").add_child(player_node)
+			cell.y = cell.y - 64
 			# move player sprite to spawn tile
 			player_node.position = cell
 			# move player_pos to spawn tile pos
-			player_node.player_pos = self.get_used_cells()[0]
+			player_node.player_pos = tile
 			
 			
 		if cell_custom_data == "Trashke":
 			# add tile to npc_tiles
 			npc_tiles.append(tile)
 			# adjust for tile offset
-			cell.y = cell.y - 16
+			cell.y = cell.y - 64
 			cell.x = cell.x + 5
 			# move NPC sprite to spawn tile
 			npc_node.position = cell
@@ -72,7 +76,7 @@ func parse_spawns(spawns):
 			npc_node.npc_pos = self.get_used_cells()[0]
 
 		if cell_custom_data == "Torch":
-			cell.y -= 8
+			cell.y -= 64
 			var torch_scene = preload("res://scenes/torch.tscn")
 			var torch_node = torch_scene.instantiate()
 			torch_node.name = "torch_" + str(torch_id)

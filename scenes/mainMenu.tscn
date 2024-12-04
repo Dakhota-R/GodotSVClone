@@ -26,4 +26,13 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Start Game"
 
+[node name="LoadButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1175.0
+offset_top = 408.0
+offset_right = 1588.0
+offset_bottom = 662.0
+text = "Load Game"
+
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="LoadButton" to="." method="_on_load_button_pressed"]

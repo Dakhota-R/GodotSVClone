@@ -1,21 +1,16 @@
-[gd_scene load_steps=17 format=3 uid="uid://wlgfhmu0dnjb"]
+[gd_scene load_steps=16 format=3 uid="uid://wlgfhmu0dnjb"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_we0cr"]
 [ext_resource type="Script" path="res://scripts/label.gd" id="3_1yjtg"]
 [ext_resource type="Script" path="res://scripts/sprite_2d.gd" id="3_4hv4d"]
 [ext_resource type="Script" path="res://scripts/camera_2d.gd" id="3_6iahh"]
 [ext_resource type="Script" path="res://addons/smoothing/smoothing_2d.gd" id="3_hbggm"]
-[ext_resource type="Texture2D" uid="uid://nllhtsb38fnk" path="res://assets/shadow.png" id="4_436f4"]
 [ext_resource type="Script" path="res://scripts/shadow.gd" id="5_kyf2t"]
-[ext_resource type="Texture2D" uid="uid://12t75dfy4qqg" path="res://assets/SpriteSheets/FLoatyEyeGuySpriteSheet.png" id="7_n8hey"]
-[ext_resource type="Texture2D" uid="uid://87vt5ig6hoqf" path="res://assets/normalMaps/FLoatyEyeGuySpriteSheet_n.png" id="8_xtjgd"]
+[ext_resource type="Texture2D" uid="uid://hepsq8co8m7c" path="res://assets/EnlargedSprites/shadowx4.png" id="5_rwujv"]
+[ext_resource type="Texture2D" uid="uid://c01ufwvdyaoe8" path="res://assets/EnlargedSprites/FLoatyEyeGuySpriteSheetx4.png" id="7_bt56y"]
 [ext_resource type="PackedScene" uid="uid://cguapap4djrqf" path="res://scenes/pause_menu.tscn" id="10_0osvq"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_noyh7"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_mac3l"]
-diffuse_texture = ExtResource("7_n8hey")
-normal_texture = ExtResource("8_xtjgd")
+[ext_resource type="Texture2D" uid="uid://cd4n84rncfn0e" path="res://assets/pointlighttexture.webp" id="10_p4oba"]
+[ext_resource type="Script" path="res://scripts/point_light_2d.gd" id="11_yus5u"]
 
 [sub_resource type="Animation" id="Animation_pexpy"]
 resource_name = "Eye_Front"
@@ -80,13 +75,20 @@ y_sort_enabled = true
 safe_margin = 1.0
 script = ExtResource("1_we0cr")
 
+[node name="Shadow" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, 63)
+texture = ExtResource("5_rwujv")
+script = ExtResource("5_kyf2t")
+
 [node name="Smoothing2D" type="Node2D" parent="."]
 script = ExtResource("3_hbggm")
 target = NodePath("Camera2D")
+flags = 15
 
 [node name="Camera2D" type="Camera2D" parent="Smoothing2D"]
 position = Vector2(0, -3)
-zoom = Vector2(3, 3)
+process_callback = 0
 position_smoothing_enabled = true
 script = ExtResource("3_6iahh")
 
@@ -107,23 +109,11 @@ offset_bottom = -150.0
 text = "FPS"
 script = ExtResource("3_1yjtg")
 
-[node name="Shadow" type="Sprite2D" parent="Smoothing2D/Camera2D/Control"]
-y_sort_enabled = true
-position = Vector2(0, 3)
-texture = ExtResource("4_436f4")
-script = ExtResource("5_kyf2t")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
-y_sort_enabled = true
-texture = SubResource("CompressedTexture2D_noyh7")
-script = ExtResource("3_4hv4d")
-
 [node name="SpriteAnimated" type="Sprite2D" parent="."]
 z_as_relative = false
 y_sort_enabled = true
 position = Vector2(0, -8)
-texture = SubResource("CanvasTexture_mac3l")
+texture = ExtResource("7_bt56y")
 hframes = 4
 vframes = 8
 script = ExtResource("3_4hv4d")
@@ -135,3 +125,16 @@ libraries = {
 
 [node name="PauseMenu" parent="." instance=ExtResource("10_0osvq")]
 visible = false
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+top_level = true
+y_sort_enabled = true
+position = Vector2(0, 45.2352)
+scale = Vector2(1, 0.512578)
+energy = 0.49
+blend_mode = 1
+shadow_enabled = true
+texture = ExtResource("10_p4oba")
+offset = Vector2(0, 60.805)
+texture_scale = 0.25
+script = ExtResource("11_yus5u")

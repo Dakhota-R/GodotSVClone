@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://db73e2j4f51ro"
-path="res://.godot/imported/torch.png-6e8cae3b023ece5d2095796306dc5f4b.ctex"
+uid="uid://bpf72wtpnbcsv"
+path="res://.godot/imported/FLoatyEyeGuySpriteSheet_nx4.png-962885e38f2d52c50fd116981a29e880.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/torch.png"
-dest_files=["res://.godot/imported/torch.png-6e8cae3b023ece5d2095796306dc5f4b.ctex"]
+source_file="res://assets/EnlargedSprites/FLoatyEyeGuySpriteSheet_nx4.png"
+dest_files=["res://.godot/imported/FLoatyEyeGuySpriteSheet_nx4.png-962885e38f2d52c50fd116981a29e880.ctex"]
 
 [params]
 
