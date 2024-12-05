@@ -2,13 +2,6 @@ extends Control
 
 @onready var rootNode = get_tree().get_root().get_node("Root")
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-
-
 func _on_unpause_pressed() -> void:
 	unpause()
 
@@ -38,27 +31,13 @@ func _on_save_pressed() -> void:
 
 		# store save dict as a new line in save file
 		save_file.store_line(json_string)
-
-	
-
-
-func _on_temp_load_game_pressed() -> void:
-	load_game()
+		unpause()
 
 func load_game():
 	if not FileAccess.file_exists("user://savegame.save"):
 		return # no save exists
 
 	var player_node = rootNode.get_node("Objects/Player")
-
-	# copied tut comments: 
-	# We need to revert the game state so we're not cloning objects
-	# during loading. This will vary wildly depending on the needs of a
-	# project, so take care with this step.
-	# For our example, we will accomplish this by deleting saveable objects.
-	#var save_nodes = self.get_tree().get_nodes_in_group("Persist")
-	#for i in save_nodes:
-		#i.queue_free()
 
 	var save_file = FileAccess.open("user://savegame.save", FileAccess.READ)
 	while save_file.get_position() < save_file.get_length():
@@ -98,8 +77,7 @@ func load_game():
 			
 			player_node.placed_tiles = parsed_tiles
 			player_node.load_placed_tiles()
-		else:
-			continue
+
 
 		#unpause the game and close pause menu if open
 		get_tree().paused = false
@@ -109,3 +87,9 @@ func unpause():
 	var pause_menu_node = rootNode.get_node("Objects/Player/PauseMenu")
 	pause_menu_node.set_visible(false)
 	get_tree().paused = false
+
+
+func _on_main_menu_button_pressed() -> void:
+	# must unpuase game when button pressed or no game actions lol
+	unpause()
+	get_tree().change_scene_to_file("res://scenes/mainMenu.tscn")

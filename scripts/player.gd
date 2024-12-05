@@ -7,8 +7,6 @@ var input_dir
 var player_pos = Vector2i(0, 0)
 
 var tilemaps_dict = {
-	"floor_tiles": [],
-	"obstacle_tiles": [],
 	"npc_tile": [],
 }
 
@@ -38,13 +36,6 @@ func _ready() -> void:
 	var npc_tile = spawnTilesLayer.npc_tiles
 	
 	tilemaps_dict.npc_tile = npc_tile
-
-	var floor_tiles = []
-	var floor_cells = rootNode.get_node("Ground").get_used_cells()
-	for tile in floor_cells:
-		if check_water_tiles(tile):
-			floor_tiles.append(tile)
-	tilemaps_dict.floor_tiles = floor_tiles
 
 	var obstacle_tiles = self.get_parent().get_used_cells()
 	tilemaps_dict.obstacle_tiles = obstacle_tiles
@@ -112,8 +103,6 @@ func move(next_pos, speed):
 		disable_dialog()
 	if !check_floor_tiles(next_pos):
 		return
-	if check_obstacle_tiles(next_pos):
-		return
 	if check_npc_tiles(next_pos):
 		return
 	if input_dir:
@@ -136,21 +125,7 @@ func update_player_pos(next_pos):
 	player_pos = next_pos
 
 func check_floor_tiles(next_pos):
-	if tilemaps_dict.floor_tiles.has(next_pos):
-		return true
-
-func check_water_tiles(cell):
-	var ground_node = rootNode.get_node("Ground")
-	var map_to_tile = ground_node.map_to_local(cell)
-	var maptile = ground_node.local_to_map(map_to_tile)
-	var tile_data = ground_node.get_cell_tile_data(maptile)
-	var custom_tile_data = tile_data.get_custom_data("Type")
-	if custom_tile_data == "Water":
-		return false
-	return true
-
-func check_obstacle_tiles(next_pos):
-	if tilemaps_dict.obstacle_tiles.has(next_pos):
+	if rootNode.get_node("Ground").floor_tiles.has(next_pos):
 		return true
 
 func check_npc_tiles(next_pos):
@@ -199,21 +174,11 @@ func play_npc_dialog():
 
 	dialog_text.text = '"' + dialog_list[dialog_index] + '"'
 
-
-func place_tiles(facing_tile):
-	rootNode.get_node("Ground").set_cell(facing_tile, 1, Vector2i(4, 1))
-	tilemaps_dict.floor_tiles.append(facing_tile)
-	add_placed_tile(facing_tile, 1, Vector2i(4, 1))
-
-func add_placed_tile(tile_pos, atlas_source, atlas_coord):
-	placed_tiles.append([tile_pos, atlas_source, atlas_coord])
-
 func disable_dialog():
 	dialog_box.visible = false
 	dialogging = false
 	more_dialog = true
 	dialog_index = 0
-
 
 func update_camera():
 	self.get_node("Smoothing2D").get_node("Camera2D").global_position = self.global_position
@@ -221,10 +186,20 @@ func update_camera():
 func _on_unpause_pressed() -> void:
 	get_tree().paused = false
 
+func place_tiles(facing_tile):
+	# set cell in ground scene, append to floor tiles list in ground scene, add to placed tiles list
+	rootNode.get_node("Ground").set_cell(facing_tile, 1, Vector2i(4, 1))
+	rootNode.get_node("Ground").floor_tiles.append(facing_tile)
+	add_placed_tile(facing_tile, 1, Vector2i(4, 1))
+
+func add_placed_tile(tile_pos, atlas_source, atlas_coord):
+	placed_tiles.append([tile_pos, atlas_source, atlas_coord])
+
 func load_placed_tiles():
+	# add player placed tiles to ground scene so they can be interacted with
 	for tile in placed_tiles:
 		rootNode.get_node("Ground").set_cell(tile[0], tile[1], tile[2])
-		tilemaps_dict.floor_tiles.append(tile[0])
+		rootNode.get_node("Ground").floor_tiles.append(tile[0])
 
 
 func save():
@@ -235,7 +210,7 @@ func save():
 		"direction" : direction,
 		"anim_side" : anim_side,
 		"anim_flip" : anim_flip,
-		"placed_tiles" : placed_tiles
+		"placed_tiles" : placed_tiles,
 	}
 
 	return save_dict
